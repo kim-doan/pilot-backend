@@ -1,6 +1,8 @@
 package com.wdyj.boilerplate.spot.services;
 
+import com.wdyj.boilerplate.exception.SpotNotFoundException;
 import com.wdyj.boilerplate.mapper.SpotMapper;
+import com.wdyj.boilerplate.spot.dto.SpotDetailDto;
 import com.wdyj.boilerplate.spot.dto.SpotDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,6 +28,17 @@ public class SpotService {
             }
             return spot;
         }).collect(Collectors.toList());
+    }
+
+    @Transactional
+    public SpotDetailDto getSpotDetail(String spot_id) {
+        SpotDetailDto spotDetail = spotMapper.getSpotDetail(spot_id).orElseThrow(() -> new SpotNotFoundException());
+
+        if(spotDetail.getHash_tag() != null) {
+            spotDetail.setHash_tag_list(spotDetail.getHash_tag().split("#"));
+        }
+
+        return spotDetail;
     }
 
 }

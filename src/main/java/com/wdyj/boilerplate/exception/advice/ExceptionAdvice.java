@@ -2,6 +2,7 @@ package com.wdyj.boilerplate.exception.advice;
 
 import com.wdyj.boilerplate.exception.CategoryNotFoundException;
 import com.wdyj.boilerplate.exception.PostNotFoundException;
+import com.wdyj.boilerplate.exception.SpotNotFoundException;
 import com.wdyj.boilerplate.response.model.ErrorResponse;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -29,13 +30,13 @@ public class ExceptionAdvice {
         return messageSource.getMessage(code, args, LocaleContextHolder.getLocale());
     }
 
-    // 알 수 없는 오류
-    @ExceptionHandler(Exception.class)
-    @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
-    protected ResponseEntity defaultException(HttpServletRequest request, Exception e) {
-        e.printStackTrace();
-        return new ResponseEntity<>(new ErrorResponse(getMessage("unKnown.code"), getMessage("unKnown.msg")), HttpStatus.INTERNAL_SERVER_ERROR);
-    }
+//    // 알 수 없는 오류
+//    @ExceptionHandler(Exception.class)
+//    @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
+//    protected ResponseEntity defaultException(HttpServletRequest request, Exception e) {
+//        e.printStackTrace();
+//        return new ResponseEntity<>(new ErrorResponse(getMessage("unKnown.code"), getMessage("unKnown.msg")), HttpStatus.INTERNAL_SERVER_ERROR);
+//    }
 
     // 게시판 카테고리를 찾지 못함
     @ExceptionHandler(CategoryNotFoundException.class)
@@ -51,5 +52,13 @@ public class ExceptionAdvice {
     public ResponseEntity handlePostNotFoundException(PostNotFoundException e) {
         e.printStackTrace();
         return new ResponseEntity<>(new ErrorResponse(getMessage("postNotFound.code"), getMessage("postNotFound.msg")), HttpStatus.BAD_REQUEST);
+    }
+
+    // 관광지를 찾지 못함
+    @ExceptionHandler(SpotNotFoundException.class)
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    public ResponseEntity handleSpotNotFoundException(SpotNotFoundException e) {
+        e.printStackTrace();
+        return new ResponseEntity<>(new ErrorResponse(getMessage("spotNotFound.code"), getMessage("spotNotFound.msg")), HttpStatus.BAD_REQUEST);
     }
 }

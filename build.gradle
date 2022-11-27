@@ -44,9 +44,9 @@ dependencies {
 	implementation 'mysql:mysql-connector-java:5.1.49'
 }
 
-tasks.named('test') {
-	useJUnitPlatform()
-}
+//tasks.named('test') {
+//	useJUnitPlatform()
+//}
 
 openApi {
 	apiDocsUrl.set("http://localhost:8080/v3/api-docs.yaml")

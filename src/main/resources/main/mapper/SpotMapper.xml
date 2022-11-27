@@ -10,6 +10,29 @@
         <result column="poi_hashtag" property="poi_hashtag" />
     </resultMap>
 
+    <resultMap id="spotDetailMap" type="com.wdyj.boilerplate.spot.dto.SpotDetailDto">
+        <result column="poi_seq" property="spot_id" />
+        <result column="poi_name" property="spot_name" />
+        <result column="poi_region" property="region" />
+        <result column="likes" property="likes"/>
+        <result column="lookups" property="lookups"/>
+        <result column="links" property="links"/>
+        <result column="poi_lat" property="lat"/>
+        <result column="poi_lng" property="lng"/>
+        <result column="poi_hashtag" property="hash_tag"/>
+        <result column="contact_line" property="contact_line"/>
+        <result column="home_page" property="home_page"/>
+        <result column="addr" property="addr"/>
+    </resultMap>
+
+    <resultMap id="spotImageMap" type="com.wdyj.boilerplate.spot.dto.SpotImageDto">
+        <result column="" property="id"/>
+        <result column="" property="spot_name"/>
+        <result column="" property="path"/>
+        <result column="" property="time"/>
+        <result column="" property="likeYn"/>
+    </resultMap>
+
     <select id="getSpotList" resultMap="spotListMap">
         SELECT a.poi_seq as poi_seq,
                a.poi_name as poi_name,
@@ -19,5 +42,32 @@
         FROM t_poi a
         LEFT JOIN t_poi_file b on a.poi_seq = b.poi_seq
         LEFT JOIN t_share c on b.pfile_seq = c.file_seq
+    </select>
+
+    <select id="getSpotDetail" parameterType="com.wdyj.boilerplate.spot.dto.SpotDetailParamDto" resultMap="spotDetailMap">
+        SELECT a.poi_seq as poi_seq,
+               a.poi_name as poi_name,
+               a.poi_region as poi_region,
+               a.likes as likes,
+               a.links as links,
+               a.lookups as lookups,
+               a.poi_hashtag as poi_hashtag,
+               a.poi_lat as poi_lat,
+               a.poi_lng as poi_lng,
+               a.home_page as home_page,
+               a.contact_line as contact_line
+        FROM t_poi a
+        WHERE 1=1
+        AND a.poi_seq = #{spot_id}
+    </select>
+
+    <select id="getSpotImage" parameterType="com.wdyj.boilerplate.spot.dto.SpotDetailParamDto" resultMap="spotImageMap">
+        SELECT
+            a.poi_name,
+            b.pfile_dt
+        FROM t_poi a
+        INNER JOIN t_poi_file b on a.poi_seq = ${spot_id}
+        INNER JOIN t_share c on b.pfile_seq = c.file_seq
+        WHERE 1=1
     </select>
 </mapper>

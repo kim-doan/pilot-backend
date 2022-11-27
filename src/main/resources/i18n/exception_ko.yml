@@ -7,3 +7,6 @@ categoryNotFound:
 postNotFound:
   code: "E401"
   msg: "게시글을 찾을 수 없습니다."
+spotNotFound:
+  code: "E402"
+  msg: "관광지를 찾을 수 없습니다."
