@@ -2,7 +2,6 @@ package com.wdyj.boilerplate.spot.services;
 
 import com.wdyj.boilerplate.mapper.SpotMapper;
 import com.wdyj.boilerplate.spot.dto.SpotDto;
-import com.wdyj.boilerplate.spot.model.Spot;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -10,6 +9,7 @@ import org.springframework.stereotype.Service;
 import javax.transaction.Transactional;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 @Transactional
@@ -19,21 +19,13 @@ public class SpotService {
 
     @Transactional
     public List<SpotDto> getSpotList() {
-        List<Spot> spotList = spotMapper.getSpotList();
 
-        List<SpotDto> dtoList = new ArrayList<>();
-
-        for (Spot spot : spotList) {
-            SpotDto spotDto = SpotDto.builder()
-                    .spot_id(spot.getPoiSeq())
-                    .spot_name(spot.getPoiName())
-                    .region(spot.getPoiRegion())
-                    .build();
-
-            dtoList.add(spotDto);
-        }
-
-        return dtoList;
+        return spotMapper.getSpotList().stream().map(spot -> {
+            if(spot.getPoi_hashtag() != null) {
+                spot.setHash_tag_list(spot.getPoi_hashtag().split("#"));
+            }
+            return spot;
+        }).collect(Collectors.toList());
     }
 
 }
