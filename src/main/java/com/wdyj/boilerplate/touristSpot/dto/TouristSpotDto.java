@@ -9,7 +9,7 @@ import lombok.Setter;
 @Builder
 public class TouristSpotDto {
 
-    private int spot_id; //관광지 고유 값
+    private Integer spot_id; //관광지 고유 값
     private String name; //관광지 이름
     private String lat; //위도
     private String lng; //경도
