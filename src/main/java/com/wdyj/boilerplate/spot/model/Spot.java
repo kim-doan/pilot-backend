@@ -1,5 +1,6 @@
 package com.wdyj.boilerplate.spot.model;
 
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.Setter;
@@ -9,9 +10,10 @@ import java.time.LocalDateTime;
 @Getter
 @Setter
 @RequiredArgsConstructor
+@AllArgsConstructor
 public class Spot {
     // 관심여행지 순번
-    private Integer poiSeq;
+    private String poiSeq;
 
     // 지역 명
     private String poiRegion;

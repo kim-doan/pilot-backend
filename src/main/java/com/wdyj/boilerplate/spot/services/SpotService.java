@@ -25,7 +25,7 @@ public class SpotService {
 
         for (Spot spot : spotList) {
             SpotDto spotDto = SpotDto.builder()
-                    .spot_id(spot.getPoiId())
+                    .spot_id(spot.getPoiSeq())
                     .spot_name(spot.getPoiName())
                     .region(spot.getPoiRegion())
                     .build();
