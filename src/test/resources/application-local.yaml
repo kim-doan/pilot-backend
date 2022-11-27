@@ -27,3 +27,5 @@ mybatis:
   type-aliases-package: com.wdyj.boilerplate.mapper # MyBatis Mapper 패키지 위치
   configuration:
     map-underscore-to-camel-case: true
+file:
+  basePath: / # 파일 업로드 경로
