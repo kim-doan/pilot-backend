@@ -1,8 +1,23 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.wdyj.boilerplate.mapper.SpotMapper">
-    <select id="getSpotList" resultType="com.wdyj.boilerplate.spot.model.Spot">
-        SELECT *
-        FROM t_poi
+
+    <resultMap id="spotListMap" type="com.wdyj.boilerplate.spot.dto.SpotDto">
+        <result column="poi_seq" property="spot_id" />
+        <result column="poi_name" property="spot_name" />
+        <result column="poi_region" property="region" />
+        <result column="share_link" property="img_path" />
+        <result column="poi_hashtag" property="poi_hashtag" />
+    </resultMap>
+
+    <select id="getSpotList" resultMap="spotListMap">
+        SELECT a.poi_seq as poi_seq,
+               a.poi_name as poi_name,
+               a.poi_region as poi_region,
+               c.share_link as share_link,
+               a.poi_hashtag as poi_hashtag
+        FROM t_poi a
+        LEFT JOIN t_poi_file b on a.poi_seq = b.poi_seq
+        LEFT JOIN t_share c on b.pfile_seq = c.file_seq
     </select>
 </mapper>
