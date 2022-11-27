@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.wdyj.boilerplate.mapper.TouristSpotMapper">
+
+    <resultMap id="touristSpotListMap" type="com.wdyj.boilerplate.touristSpot.dto.TouristSpotDto">
+        <result column="poi_seq" property="spot_id" />
+        <result column="poi_name" property="name" />
+        <result column="poi_lat" property="lat" />
+        <result column="poi_lng" property="lng" />
+        <result column="share_link" property="img_path" />
+    </resultMap>
+
+    <select id="getTouristSpotList" resultMap="touristSpotListMap">
+        SELECT
+            A.poi_seq as spot_id
+            ,A.poi_name as name
+            ,A.poi_lat as lat
+            ,A.poi_lng as lng
+            ,B.share_link as img_path
+        FROM t_poi A
+            LEFT JOIN t_share B ON A.poi_id = B.user_id
+            LEFT JOIN t_poi_file C ON A.poi_seq = C.poi_seq AND B.file_seq = C.pfile_seq
+    </select>
+</mapper>
